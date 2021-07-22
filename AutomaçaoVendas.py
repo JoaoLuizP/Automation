@@ -1,4 +1,4 @@
-import pandas as pd  # Biblioteca q "cria" um excel no python , usando tabelas
+import pandas as pd  # Library that "creates" an excel in python , using tables
 import win32com.client as win32
 import time
 
@@ -11,30 +11,30 @@ print('\033[36m Processando... \033[m')
 time.sleep(1)
 print('\033[1;30m-=\033[m' * 45)
 
-tabela_vendas = pd.read_excel('Vendas.xlsx')  # Importa a base de dados do excel
-pd.set_option('display.max_columns', None)  # Mostrar o maximo de colunas do arquivo - Visualizando a base de dados
+tabela_vendas = pd.read_excel('Vendas.xlsx')  # Import to excel database
+pd.set_option('display.max_columns', None)  # Show maximum columns of file - Viewing database
 print(tabela_vendas)
 
-# Faturamento por loja - Filtra primeiro. Agrupando todas as lojas e somando o faturamento total de cada uma delas
+# Billing by Store - Filters first. Grouping all stores and adding up the total sales of each one of them
 faturamento = tabela_vendas[['ID Loja', 'Valor Final']].groupby('ID Loja').sum()
 print(faturamento)
 print('\033[1;30m-=\033[m' * 45)
 
-# Quantidade de produtos vendidos por lojas
+# Number of products sold by stores
 quantidade = tabela_vendas[['ID Loja', 'Quantidade']].groupby('ID Loja').sum()
 print(quantidade)
 print('\033[1;30m-=\033[m' * 45)
 
-# Ticket médio por produto em cada loja ( faturamento divido por quantidade de produtos )
-ticket_medio = (faturamento['Valor Final'] / quantidade['Quantidade']).to_frame()  # To_frame = Transformando em tabela
-ticket_medio = ticket_medio.rename(columns={0: 'Ticket Médio'})  # Mudando o nome da coluna da tabela de ticket médio
+# Average ticket per product in each store (invoicing divided by quantity of products)
+ticket_medio = (faturamento['Valor Final'] / quantidade['Quantidade']).to_frame()  # To_frame = Turning into table
+ticket_medio = ticket_medio.rename(columns={0: 'Ticket Médio'})  # Changing the Column Name of the Average Ticket Table
 print(ticket_medio)
 
-# Enviar um email com o relatorio
+# Send an email with the report
 outlook = win32.Dispatch('outlook.application')
 mail = outlook.CreateItem(0)
-mail.to = 'mr.jooncanal@hotmail.com'  # O email do destinatario
-mail.Subject = 'Relatório de Vendas por Loja'  # Titulo do email
+mail.to = 'xxxxxxx@hotmail.com'  # The recipient's email
+mail.Subject = 'Relatório de Vendas por Loja'  # Email title
 mail.HTMLBody = f'''
 <p>Prezados,</p>
 
@@ -52,7 +52,7 @@ mail.HTMLBody = f'''
 <p>Qualquer dúvida estou a disposição.</p>
 
 <p>Att.,</p>
-<p>João Luiz</p>
+<p> xxxxxxx </p>
 '''
 
 mail.Send()
